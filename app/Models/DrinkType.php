@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class DrinkType extends Model
 {
     use HasFactory;
+    protected $fillable = ['type_name'];
+
+    public function drinks()
+    {
+        return $this->hasMany(Drink::class, 'type_id');
+    }
 }

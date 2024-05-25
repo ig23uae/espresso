@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.7",
+        "laravel/reverb": "@beta",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
-        "spatie/laravel-permission": "^6.7"
+        "spatie/laravel-permission": "^6.7",
+        "yoomoney/yookassa-sdk-php": "^3.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

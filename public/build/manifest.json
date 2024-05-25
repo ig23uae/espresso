@@ -1,11 +1,18 @@
 {
+    "name": "R-Keeper",
+    "short_name": "R-Keeper",
+    "start_url": "/worker_panel",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#212529",
+    "theme_color": "#212529",
   "resources/css/app.css": {
-    "file": "assets/app-BY1JaEhy.css",
+    "file": "assets/app-CVFOfNB4.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-bKHF8l2n.js",
+    "file": "assets/app-DpI3BCYt.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

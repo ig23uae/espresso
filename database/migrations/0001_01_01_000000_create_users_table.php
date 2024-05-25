@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');// Телефон
-            $table->dateTime('birth');// Дата рождения
+            $table->dateTime('birth')->nullable();// Дата рождения
             $table->boolean('worker')->default(False);
             $table->string('position')->nullable();
             $table->rememberToken();

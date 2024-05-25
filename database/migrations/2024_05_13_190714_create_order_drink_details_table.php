@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('order_drink_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('drink_id')->constrained('drinks');
+            $table->foreignId('drink_pivot_id')->constrained('drink_size_pivots');
             $table->timestamps();
         });
     }

@@ -110,7 +110,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{{route('drink_sizes.index')}}" class="nav-link">
                                     <i class="nav-icon fas fa-solid fa-circle"></i>
                                     <p>Размеры</p>
                                 </a>
@@ -291,7 +291,7 @@
     <footer class="main-footer">
         CRM
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> {{ config('app.version') }}
+            <b>Version</b> 1.0
         </div>
     </footer>
 

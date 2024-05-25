@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name'); //Название напитка
             $table->text('description');// Описание напитка
             $table->foreignId('type_id')->constrained('drink_types');
-            $table->foreignId('size_id')->constrained('drink_sizes');
             $table->string('image'); // Путь к изображению
             $table->timestamps();
         });

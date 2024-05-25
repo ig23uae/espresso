@@ -1,3 +1,8 @@
+@php
+    $totalQuantity = session()->get('total_items');
+    //@dd($cart['total_items'])
+    //$totalQuantity = $cart['total_items'];
+@endphp
 <!doctype html>
 <html lang="ru">
 <head>
@@ -9,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('panel/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <title>Espresso</title>
@@ -59,12 +65,19 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
-                <li><a href="/menu" class="nav-link px-2 text-secondary">Меню</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Акции</a></li>
+                <li><a href="{{route('client_menu', ['type' => 'top'])}}" class="nav-link px-2 text-secondary">Меню</a></li>
+                <li>
+                    @if(auth()->user())
+                        <a href="{{route('cart', ['user_id' => auth()->user()->getAuthIdentifier()])}}" class="nav-link px-2 text-white">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart">{{$totalQuantity}}</span>
+                        </a>
+                    @endif
+                </li>
             </ul>
 
             <div class="text-end">
-                <a href="#" class="px-5 text-white text-decoration-none">
+                <a href="{{route('near')}}" class="px-5 text-white text-decoration-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
                     </svg>
@@ -80,63 +93,12 @@
         </div>
     </div>
 </header>
-<main>
+<main style="height: -webkit-fill-available">
     <div class="row container-fluid object-fit-cover">
         <div class="col-2">
             <div class="offcanvas-md offcanvas-end" tabindex="999" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
                 <div class="offcanvas-body pt-lg-3 overflow-x-hidden">
-                    <div class="flex-shrink-0 w-100">
-                        <br class="px-3">
-                        <ul class="list-unstyled ps-0">
-                            <li class="mb-1">
-                                <button class="btn text-light btn-toggle d-inline-flex align-items-center justify-content-between rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                                    <h2>Кофе</h2>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                    </svg>
-                                </button>
-                                <div class="collapse show" id="home-collapse">
-                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="{{route('client_menu', ['type' => 'hot'])}}" class="link-light d-inline-flex text-decoration-none rounded"><h5>Популярное</h5></a></li>
-                                        <li><a href="{{route('client_menu', ['type' => 'hot'])}}" class="link-light d-inline-flex text-decoration-none rounded"><h5>Горячее</h5></a></li>
-                                        <li><a href="{{route('client_menu', ['type' => 'hot'])}}" class="link-light d-inline-flex text-decoration-none rounded"><h5>Холодное</h5></a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <button class="btn text-light btn-toggle d-inline-flex align-items-center justify-content-between rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                                    <h3>Выпечка</h3>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                    </svg>
-                                </button>
-                                <div class="collapse show" id="dashboard-collapse">
-                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>пирожное</h5></a></li>
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>круассаны</h5></a></li>
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>торты</h5></a></li>
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>эклеры</h5></a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <button class="btn text-light btn-toggle d-inline-flex align-items-center justify-content-between rounded border-0 collapsed w-100" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                                    <h3>Чаи</h3>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                    </svg>
-                                </button>
-                                <div class="collapse show" id="orders-collapse">
-                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="{{route('client_menu', ['type' => 'tea'])}}" class="link-light d-inline-flex text-decoration-none rounded"><h5>чай-латте</h5></a></li>
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>черный</h5></a></li>
-                                        <li><a href="#" class="link-light d-inline-flex text-decoration-none rounded"><h5>зеленый</h5></a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
+                    @include('client.menu-component')
                     <hr class="my-3">
                 </div>
             </div>
@@ -146,22 +108,14 @@
             <div class="align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2 text-light">Меню</h1>
                 <div class="row p-3 gap-4">
-                    @foreach($products as $product)
-                        <div class="card" style="width: 22rem;">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Cappuccino_at_Sightglass_Coffee.jpg/640px-Cappuccino_at_Sightglass_Coffee.jpg" class="card-img-top pt-2" alt="{{$product->name}}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{$product->name}}</h5>
-                                <p class="card-text">{{ substr($product->description, 0, 50) }}{{ strlen($product->description) > 50 ? '...' : '' }}</p>
-                                <p class="card-text">{{$product->price}}₽</p>
-                                @guest()
-                                    <button class="btn btn-success add-to-cart disabled" data-product-id="{{ $product->id }}">Для заказа необходимо авторизоваться</button>
-                                @else
-                                    <button class="btn btn-success add-to-cart" data-product-id="{{ $product->id }}">Добавить в корзину</button>
-                                    <button class="btn btn-primary minus d-none" data-product-id="{{ $product->id }}">-</button>
-                                    <button class="btn btn-primary plus d-none" data-product-id="{{ $product->id }}">+</button>
-                                @endguest
-                            </div>
-                        </div>
+                    <!-- Это для напитков -->
+                    <!-- Это для еды -->
+                    @foreach($drinks as $product)
+                        @include('client.product-card', ['product' => $product, 'type' => 'drinks'])
+                    @endforeach
+
+                    @foreach($foods as $product)
+                        @include('client.product-card', ['product' => $product, 'type' => 'foods'])
                     @endforeach
                 </div>
             </div>
@@ -186,57 +140,76 @@
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('#size-button');
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
         const plusButtons = document.querySelectorAll('.plus');
         const minusButtons = document.querySelectorAll('.minus');
+        const priceDisplay = document.getElementById('price');  // Убедитесь, что этот элемент существует
 
-        function updateCart(productId, quantityChange) {
-            fetch('/cart/update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ product_id: productId, quantity: quantityChange })
-            }).then(response => response.json())
-                .then(data => {
-                    const cartButton = document.querySelector(`button[data-product-id="${productId}"].add-to-cart`);
-                    const plusButton = document.querySelector(`button[data-product-id="${productId}"].plus`);
-                    const minusButton = document.querySelector(`button[data-product-id="${productId}"].minus`);
-                    if (data.quantity > 0) {
-                        cartButton.textContent = `В корзине: ${data.quantity}`;
-                        cartButton.classList.add('disabled');
-                        plusButton.classList.remove('d-none');
-                        minusButton.classList.remove('d-none');
-                    } else {
-                        cartButton.textContent = 'Добавить в корзину';
-                        cartButton.classList.remove('disabled');
-                        plusButton.classList.add('d-none');
-                        minusButton.classList.add('d-none');
-                    }
+        // Обработчик кнопок размера напитка
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const price = this.getAttribute('data-price');
+                const sizeId = this.getAttribute('data-size-id');
+                const productId = this.getAttribute('data-product-id');
+                priceDisplay.textContent = price;
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Обновляем размер и цену для всех связанных кнопок
+                const relatedAddToCartButtons = document.querySelectorAll(`button.add-to-cart[data-product-id="${productId}"]`);
+                const relatedPlusButtons = document.querySelectorAll(`button.plus[data-product-id="${productId}"]`);
+                const relatedMinusButtons = document.querySelectorAll(`button.minus[data-product-id="${productId}"]`);
+
+                // Обновляем атрибут 'data-size-id' для кнопок 'Добавить в корзину', 'Плюс' и 'Минус'
+                [...relatedAddToCartButtons, ...relatedPlusButtons, ...relatedMinusButtons].forEach(btn => {
+                    btn.setAttribute('data-size-id', sizeId);
                 });
-        }
 
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product-id');
-                updateCart(productId, 1);
+                //Отображаем количество товаров в корзине
             });
         });
 
-        plusButtons.forEach(button => {
+        // Обработчики для кнопок корзины
+        const updateCartButtons = [...addToCartButtons, ...plusButtons, ...minusButtons];
+        updateCartButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const productId = this.getAttribute('data-product-id');
-                updateCart(productId, 1);
-            });
-        });
-
-        minusButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-product-id');
-                updateCart(productId, -1);
+                const productType = this.getAttribute('data-product-type');
+                const sizeId = this.getAttribute('data-size-id');
+                const quantityChange = button.classList.contains('plus') ? 1 : button.classList.contains('minus') ? -1 : 1;
+                updateCart(productId, productType, sizeId, quantityChange);
             });
         });
     });
+    //Здесь делаем запрос
+    function updateCart(productId, productType, sizeId, quantityChange) {
+        const cart = document.getElementById('cart');
+        fetch('/cart/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ product_id: productId, product_type: productType, size_id: sizeId, quantity: quantityChange })
+        }).then(response => response.json())
+            .then(data => {
+                const cartButton = document.querySelector(`button[data-product-id="${productId}"].add-to-cart`);
+                const plusButton = document.querySelector(`button[data-product-type="${productType}"][data-product-id="${productId}"].plus`);
+                const minusButton = document.querySelector(`button[data-product-type="${productType}"][data-product-id="${productId}"].minus`);
+                if (data.total_items > 0) {
+                    cartButton.textContent = `В корзине: ${data.total_items}`;
+                    cartButton.classList.add('disabled');
+                    plusButton.classList.remove('d-none');
+                    minusButton.classList.remove('d-none');
+                } else {
+                    cartButton.textContent = 'Добавить в корзину';
+                    cartButton.classList.remove('disabled');
+                    plusButton.classList.add('d-none');
+                    minusButton.classList.add('d-none');
+                }
+                cart.textContent = `${data.total_items}`;
+            });
+    }
 </script>
 </body>
 </html>

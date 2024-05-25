@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('order_number', 3); // Номер заказа, циклический от 000 до 099
-            $table->enum('status', ['processing', 'ready', 'saved', 'done']); // Статус заказа
+            $table->enum('status', ['create','processing', 'ready', 'saved', 'done']); // Статус заказа
             $table->decimal('total_price'); // Общая цена заказа
             $table->foreignId('cashier_id')->nullable()->constrained('users'); // ID кассира (необязательно)
             $table->foreignId('customer_id')->nullable()->constrained('users'); // ID пользователя (необязательно)

@@ -1,3 +1,6 @@
+@php
+    $totalQuantity = session()->get('total_items');
+@endphp
 <!doctype html>
     <html lang="ru">
     <head>
@@ -9,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com/docs/5.0/examples/product/product.css" rel="stylesheet">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="{{ asset('panel/plugins/fontawesome-free/css/all.min.css')}}">
         <!-- Bootstrap Bundle JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <title>Espresso</title>
@@ -59,15 +63,22 @@
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="/" class="nav-link px-2 text-secondary">Главная</a></li>
-                        <li><a href="/menu" class="nav-link px-2 text-white">Меню</a></li>
-                        <li><a href="#" class="nav-link px-2 text-white">Акции</a></li>
+                        <li><a href="{{route('client_menu', ['type' => 'top'])}}" class="nav-link px-2 text-white">Меню</a></li>
                         @role('user')
                             <li><a href="{{route('admin_index')}}" class="nav-link px-2 text-white">Админ панель</a></li>
                         @endrole
+                        <li>
+                            @if(auth()->user())
+                                <a href="{{route('cart', ['user_id' => auth()->user()->getAuthIdentifier()])}}" class="nav-link px-2 text-white">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span id="cart">{{$totalQuantity}}</span>
+                                </a>
+                            @endif
+                        </li>
                     </ul>
 
                     <div class="text-end">
-                        <a href="#" class="px-5 text-white text-decoration-none">
+                        <a href="{{route('near')}}" class="px-5 text-white text-decoration-none">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                                 <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
                             </svg>
@@ -150,6 +161,7 @@
                         <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Главная</a></li>
                         <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Меню</a></li>
                         <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Акции</a></li>
+                        <li class="nav-item"><a href="{{route('orders')}}" class="nav-link px-2 text-light">Заказы</a></li>
                     </ul>
                 </footer>
             </div>
